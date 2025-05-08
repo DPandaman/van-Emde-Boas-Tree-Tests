@@ -245,6 +245,11 @@ double loglog(int u)
 
 int main()
 {
+    // Comment out and switch Section 1 and Section 2 depending on what you want to test.
+    //      -> Section 1 tests insert, successor, etc.
+    //      -> Section 2 tests minimum and maximum
+    // Defintely can be optimized to include in one singular loop, but I am too lazy and tired right now
+
     vector<int> sizes = {
         256,
         1024,
@@ -253,6 +258,8 @@ int main()
         65536,
         262144};
     vector<int> nums = {3, 5, 2, 8, 12, 15};
+
+    // START SECTION 1
 
     for (int u : sizes)
     {
@@ -289,6 +296,47 @@ int main()
         cout << "Avg Successor Time: " << avg_successor_time << " ns/op" << endl;
         cout << "----------------------------------------" << endl;
     }
+
+    // END SECTION 1
+
+    // START SECTION 2
+
+    /* for (int u : sizes)
+    {
+        const int trials = 5;
+        long long total_min_time = 0;
+        long long total_max_time = 0;
+
+        for (int t = 0; t < trials; ++t)
+        {
+            VEBTree tempTree(u);
+            for (int x : nums)
+                tempTree.insert(x);
+
+            auto start = steady_clock::now();
+            for (int i = 0; i < nums.size(); ++i)
+                tempTree.minimum();
+            auto end = steady_clock::now();
+            total_min_time += duration_cast<nanoseconds>(end - start).count();
+
+            start = steady_clock::now();
+            for (int i = 0; i < nums.size(); ++i)
+                tempTree.maximum();
+            end = steady_clock::now();
+            total_max_time += duration_cast<nanoseconds>(end - start).count();
+        }
+
+        double avg_min_time = total_min_time / (double)(nums.size() * trials);
+        double avg_max_time = total_max_time / (double)(nums.size() * trials);
+
+        cout << "U = " << u << endl;
+        cout << "log(log(U)) = " << loglog(u) << " (theoretical)" << endl;
+        cout << "Avg Min Time: " << avg_min_time << " ns/op" << endl;
+        cout << "Avg Max Time: " << avg_max_time << " ns/op" << endl;
+        cout << "----------------------------------------" << endl;
+    } */
+
+    // END SECTION 2
 
     return 0;
 }
